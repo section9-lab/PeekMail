@@ -1,0 +1,19 @@
+body {
+    background: rgba(232, 240, 254, 0.4) !important;
+}
+.Peek-mail-btn {
+    z-index: 9999;
+    padding: 8px 16px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    /* font-size: 12px; */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.Peek-mail-btn:hover {
+    background-color: #3367d6;
+}
