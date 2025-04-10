@@ -30,26 +30,25 @@
         <button onclick={() => ($count += 1)}>+</button>
     </div> -->
   <div>
-    <p>输出语言: <b>{$language}</b></p>
-
+    <p>Summary Language:</p>
     <select bind:value={$language}>
       {#each languages as lang}
         <option value={lang.value}>{lang.label}</option>
       {/each}
     </select>
+    <br />
+    <p>Mid Map(Coming...):</p>
     <div class="toggle-container">
-      <p>思维导图(即将上线):</p>
-      <span class="toggle-label"></span>
-      <br />
       <label class="switch">
         <input type="checkbox" bind:checked={isEnabled} />
         <span class="slider"></span>
       </label>
     </div>
+    <br />
+    <p>LLM Setting(Coming...):</p>
     <div class="model-config">
-      <p>自定义模型配置(即将上线):</p>
       <div class="input-group">
-        <label for="url">API地址:</label>
+        <label for="url">API url:</label>
         <input
           type="text"
           id="url"
@@ -58,7 +57,7 @@
         />
       </div>
       <div class="input-group">
-        <label for="key">API密钥:</label>
+        <label for="key">API key:</label>
         <input
           type="password"
           id="key"
@@ -77,13 +76,13 @@
   }
 
   select {
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-    background-color: #2ecc71;
-    color: #2c3e50;
+    border-radius: 4px;
+    /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); */
+    /* background-color: #2ecc71; */
+    background-image: linear-gradient(to top right, rgb(239, 68, 68), rgb(128, 32, 219));
+    color: white;
     transition: background-color 0.3s;
     padding: 5px 10px;
-    border: 1px solid #2ecc71;
     cursor: pointer;
     text-align: center;
   }
@@ -140,7 +139,7 @@
   }
 
   input:checked + .slider {
-    background-color: #2ecc71;
+    background-image: linear-gradient(to top right, rgb(239, 68, 68), rgb(128, 32, 219));
   }
 
   input:checked + .slider:before {
@@ -166,15 +165,15 @@
   }
 
   .input-group input {
-    width: 100%;
-    padding: 2px;
-    border: 1px solid #2ecc71;
-    border-radius: 1px;
+    width: 95%;
+    /* padding: 2px; */
+    /* border-radius: 1px; */
     font-size: 11px;
   }
 
   .input-group input:focus {
-    outline: none;
+    /* color: white; */
+    /* outline: none; */
     border-color: grey;
   }
 </style>

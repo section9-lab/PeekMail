@@ -1,7 +1,7 @@
 {
     "name": "PeekMail",
     "description": "PeekMail for Chrome Extension Svelte Typescript project",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "module",
     "repository": {
         "type": "git",

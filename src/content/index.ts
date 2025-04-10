@@ -139,7 +139,7 @@ function initialize() {
   // 等待 Gmail 界面加载完成
   setTimeout(() => {
     setupUrlChangeListener();
-  }, 8000); //等待 8 秒浏览器加载完成
+  }, 3000); //等待 3 秒浏览器加载完成
 }
 
 // 确保页面完全加载后执行

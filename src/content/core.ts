@@ -1,10 +1,12 @@
 import { language } from "../storage";
-import { mount } from "svelte";
+// import { mount } from "svelte";
 import { fetchWithRetry, waitForPageLoad } from "./utils";
+
+const destXPath =
+  "//*[@id=':1']/div[position()=1 or position()=2]/div/div[2]/div[1] | //*[@id=':1']/div/div/div/div[2]/div[1]";
 
 export async function createAImail() {
   console.log("createAImail");
-
   const sourMailXPath =
     "//*[contains(@id, ':') and string-length(@id) >= 3]/div[1]/div[2]/div[3]";
   //*[@id=":156"]/div[1]/div[2]/div[3]
@@ -29,12 +31,6 @@ export async function createAImail() {
 
 async function viweData2Page(aiText: any) {
   console.log("aiText:" + aiText);
-  const destXPath =
-    "//*[@id=':1']/div[position()=1 or position()=2]/div/div[2]/div[1] | //*[@id=':1']/div/div/div/div[2]/div[1]";
-
-  //   const destXPath = "//*[@id=':1']/div[position()=1 or position()=2]/div/div[2]/div[1]";
-  //*[@id=":1"]/div/div/div/div[2]/div[1]
-  // "//*[@id=':1']/div/[position()=1 or position()=2]/div/div[2]/div[1]";
   const postElement = document.evaluate(
     destXPath,
     document,
@@ -90,15 +86,96 @@ function formatResponseWithLineBreaks(respon: string | object) {
   return text;
 }
 
+function createLoading() {
+  console.log("createLoading...");
+  const loadingDivId = "loading-div";
+  let loadingElement = document.getElementById(loadingDivId);
+  if (!loadingElement) {
+    const loadingTaget = document.evaluate(
+      destXPath,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue;
+
+    loadingElement = document.createElement("div");
+    loadingElement.id = loadingDivId;
+    
+    // 显示波浪动画
+    loadingElement.innerHTML = `
+      <div class="loading-wave"></div>
+      <style>
+        #${loadingDivId} .loading-wave {
+          width: 350px;
+          height: 12px;
+          background: linear-gradient(90deg,rgb(143, 40, 221),rgb(45, 65, 238),rgb(228, 39, 39),rgb(143, 40, 221));
+          background-size: 300% 100%;
+          border-radius: 100px;
+          animation: wave 3.5s linear infinite;
+        }
+
+        @keyframes wave {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
+        }
+      </style>
+    `;
+
+    loadingElement.style = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding-top: 40px;
+      padding-bottom: 20px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+    `;
+
+    if (loadingTaget.parentNode) {
+      loadingTaget.parentNode.insertBefore(
+        loadingElement,
+        loadingTaget.nextSibling
+      );
+    }
+  }
+  console.log("createLoaded");
+}
+
+function removeLoading() {
+  console.log("removeLoading");
+  const loadingDivId = "loading-div";
+  const loadingElement = document.getElementById(loadingDivId);
+  if (loadingElement) {
+    loadingElement.remove();
+  }
+  console.log("removeLoaded");
+}
+
 /**
  * 发送POST请求到服务器
  * @param sourceEmailText 要发送的文本数据
  * @returns 返回服务器响应
  */
 async function postMail2Server(sourceEmailText: any) {
-  language.subscribe(console.log);
-  console.log("languge:" + language);
-  const mailObjData = { emailContent: sourceEmailText, language: language };
+  //获取语言
+  let lang: string;
+  language.subscribe((value) => {
+    lang = value;
+  });
+  console.log("language:" + lang);
+  createLoading();
+  const mailObjData = { emailContent: sourceEmailText, language: lang };
   console.log("mailObjData:" + JSON.stringify(mailObjData));
   const response = await fetchWithRetry(
     "https://peek-mail.section9lab.cn/",
@@ -109,6 +186,7 @@ async function postMail2Server(sourceEmailText: any) {
     },
     { retries: 3, retryDelay: 5000 }
   );
+  removeLoading();
   console.log("response:" + response);
   return response;
 }
