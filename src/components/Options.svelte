@@ -9,6 +9,9 @@
 
   interface Props {
     language: Writable<string>;
+    url: Writable<string>;
+    model: Writable<string>;
+    apiKey: Writable<string>;
   }
 
   let { language }: Props = $props();
@@ -19,7 +22,9 @@
     { value: "日本語", label: "日本語" },
   ];
   let isEnabled = $state(false);
-  let customUrl = $state("");
+
+  let url = $state("");
+  let model = $state("");
   let apiKey = $state("");
 </script>
 
@@ -45,24 +50,33 @@
       </label>
     </div>
     <br />
-    <p>LLM Setting(Coming...):</p>
+    <p>LLM Setting:</p>
     <div class="model-config">
       <div class="input-group">
         <label for="url">API url:</label>
         <input
           type="text"
           id="url"
-          bind:value={customUrl}
+          bind:value={url}
           placeholder="https://api.groq.com/openai/v1/chat/completions"
         />
       </div>
       <div class="input-group">
-        <label for="key">API key:</label>
+        <label for="model">model:</label>
+        <input
+          type="text"
+          id="model"
+          bind:value={model}
+          placeholder="Please enter model"
+        />
+      </div>
+      <div class="input-group">
+        <label for="apikey">API key:</label>
         <input
           type="password"
-          id="key"
+          id="apikey"
           bind:value={apiKey}
-          placeholder="请输入API密钥"
+          placeholder="Please enter your API key"
         />
       </div>
     </div>

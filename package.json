@@ -1,7 +1,7 @@
 {
     "name": "PeekMail",
     "description": "PeekMail for Chrome Extension Svelte Typescript project",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "module",
     "repository": {
         "type": "git",
@@ -22,5 +22,9 @@
         "tslib": "2.8.1",
         "typescript": "5.7.2",
         "vite": "6.0.7"
+    },
+    "dependencies": {
+        "@ai-sdk/openai-compatible": "^0.2.13",
+        "ai": "^4.3.10"
     }
 }

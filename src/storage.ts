@@ -54,3 +54,6 @@ export function persistentStore<T>(key: string, initialValue: T): Writable<T> {
 
 export const count = persistentStore("count", 10);
 export const language = persistentStore("language", "中文");
+export const url = persistentStore("url", "");
+export const model = persistentStore("model", "");
+export const apiKey = persistentStore("apiKey", "");

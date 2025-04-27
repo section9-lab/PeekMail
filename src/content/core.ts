@@ -1,6 +1,21 @@
 import { language } from "../storage";
 // import { mount } from "svelte";
 import { fetchWithRetry, waitForPageLoad } from "./utils";
+import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
+import { generateText } from 'ai';
+
+
+const model = createOpenAICompatible({
+  baseURL: 'https://api.example.com/v1',
+  name: 'example',
+  apiKey: 'your-api-key',
+});
+
+const { text } = await generateText({
+  model: model.chatModel('meta-llama/Llama-3-70b-chat-hf'),
+  prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+});
+
 
 const destXPath =
   "//*[@id=':1']/div[position()=1 or position()=2]/div/div[2]/div[1] | //*[@id=':1']/div/div/div/div[2]/div[1]";

@@ -1,11 +1,12 @@
 <script lang="ts">
-    import { count,language } from "../storage";
+    import { count,language,url,model,apiKey } from "../storage";
     import Options from "./Options.svelte";
+    
 </script>
 
 <div class="overlay">
     <!-- <Options {count} /> -->
-    <Options {language} />
+    <Options {language} {url} {model} {apiKey} />
 </div>
 
 <style>
